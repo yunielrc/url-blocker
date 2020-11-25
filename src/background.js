@@ -51,7 +51,6 @@ function updateUI () {
   })
 }
 
-/// Open All urls
 function toggleBlockURL () {
   chrome.tabs.getSelected((tab) => {
     if (tab.url !== null && tab.url.trim() !== '') {
