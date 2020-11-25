@@ -2,7 +2,15 @@
   "name": "Url Blocker",
   "version": "0.1.0",
   "description": "block url",
-  "permissions": ["<all_urls>", "webRequest", "tabs", "webRequestBlocking", "contextMenus", "storage"],
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "webRequest",
+    "webRequestBlocking"
+  ],
   "background": {
     "scripts": ["background.js"]
   },

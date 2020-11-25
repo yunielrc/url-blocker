@@ -39,21 +39,31 @@ function saveState () {
 
 function updateUI () {
   chrome.tabs.getSelected((tab) => {
+    if (!tab?.url?.match(/http[s]?:\/\/.+/)) {
+      chrome.browserAction.setIcon({ path: 'icons/unblocked.png' })
+      chrome.browserAction.setTitle({ title: 'Url Blocker' })
+      chrome.contextMenus.update(CONTEXT_MENU_ID, { enabled: false, title: 'Url Blocker' })
+      chrome.browserAction.disable()
+      return
+    }
+
+    chrome.browserAction.enable()
+
     if (BLOCKED_URLS.has(tab?.url)) {
       chrome.browserAction.setIcon({ path: 'icons/blocked.png' })
       chrome.browserAction.setTitle({ title: 'Url Blocker: blocked' })
-      chrome.contextMenus.update(CONTEXT_MENU_ID, { title: 'Url Blocker: unblock' })
-    } else {
-      chrome.browserAction.setIcon({ path: 'icons/unblocked.png' })
-      chrome.browserAction.setTitle({ title: 'Url Blocker' })
-      chrome.contextMenus.update(CONTEXT_MENU_ID, { title: 'Url Blocker: block' })
+      chrome.contextMenus.update(CONTEXT_MENU_ID, { enabled: true, title: 'Url Blocker: unblock' })
+      return
     }
+    chrome.browserAction.setIcon({ path: 'icons/unblocked.png' })
+    chrome.browserAction.setTitle({ title: 'Url Blocker' })
+    chrome.contextMenus.update(CONTEXT_MENU_ID, { enabled: true, title: 'Url Blocker: block' })
   })
 }
 
 function toggleBlockURL () {
   chrome.tabs.getSelected((tab) => {
-    if (tab.url !== null && tab.url.trim() !== '') {
+    if (tab?.url?.match(/http[s]?:\/\/.+/)) {
       if (BLOCKED_URLS.has(tab.url)) {
         BLOCKED_URLS.delete(tab.url)
         console.log(`Url unblocked: ${tab.url}`)
@@ -63,6 +73,8 @@ function toggleBlockURL () {
       }
       updateUI()
       saveState()
+    } else {
+      console.log(`Invalid url ${tab?.url}`)
     }
   })
 }
@@ -92,7 +104,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       : { cancel: false }
   },
   // filters
-  { urls: ['<all_urls>'] },
+  { urls: ['http://*/*', 'https://*/*'] },
   // extraInfoSpec
   ['blocking'])
 
