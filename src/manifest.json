@@ -1,0 +1,28 @@
+{
+  "name": "Url Blocker",
+  "version": "0.1.0",
+  "description": "block url",
+  "permissions": ["<all_urls>", "webRequest", "tabs", "webRequestBlocking", "contextMenus", "storage"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "block url",
+    "default_icon": "icons/unblocked.png"
+  },
+  "icons": {
+    "16": "icons/get_started16.png",
+    "32": "icons/get_started32.png",
+    "48": "icons/get_started48.png",
+    "128": "icons/get_started128.png"
+  },
+  "commands": {
+    "block-unblock-url": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U"
+      },
+      "description": "block & unblock url"
+    }
+  },
+  "manifest_version": 2
+}

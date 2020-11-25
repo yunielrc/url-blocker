@@ -1,0 +1,35 @@
+{
+  "name": "@yunielrc/url-blocker",
+  "version": "0.1.0",
+  "description": "Block urls",
+  "private": true,
+  "scripts": {
+    "lint": "standard",
+    "test": "jest",
+    "test:w": "jest --watch",
+    "test:us": "jest --updateSnapshot",
+    "preversion": "npm lint && npm test",
+    "version": "git add -A .",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "jest": "^26.5.2",
+    "standard": "*"
+  },
+  "standard": {
+    "env": [
+      "browser",
+      "webextensions",
+      "jest"
+    ],
+    "globals": [
+      "$",
+      "jQuery",
+      "fetch"
+    ],
+    "ignore": [
+      "node_modules/**"
+    ]
+  }
+}

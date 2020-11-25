@@ -1,0 +1,21 @@
+{
+  "cSpell.enabled": false,
+  "files.exclude": {
+    "**/package-lock.json": true,
+    "**/yarn.lock": true,
+    "node_modules": true,
+    "coverage": true
+  },
+  "javascript.validate.enable": false,
+  "standard.enable": true,
+  "standard.options": {
+    "env": ["browser","webextensions","jest"],
+    "globals": [
+      "$",
+      "jQuery",
+      "fetch"
+    ],
+    "ignore": ["node_modules/**"]
+  },
+  "editor.formatOnSave": false
+}
