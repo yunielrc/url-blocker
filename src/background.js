@@ -2,23 +2,24 @@
 let BLOCKED_URLS = new Set()
 const CONTEXT_MENU_ID = 'menu-block-unblock-url'
 
-chrome.runtime.onInstalled.addListener(function () {
-  // Context Menu
-  chrome.contextMenus.create({
-    id: CONTEXT_MENU_ID,
-    title: 'Block url',
-    contexts: ['page']
-  })
-  loadState()
-  updateUI()
-})
-
-chrome.runtime.onStartup.addListener(function () {
-  loadState()
-  updateUI()
-})
+chrome.runtime.onInstalled.addListener(onStartup)
+chrome.runtime.onStartup.addListener(onStartup)
 
 // Functions
+
+function onStartup () {
+  createMenu('Block url')
+  loadState()
+  updateUI()
+}
+
+function createMenu (title) {
+  chrome.contextMenus.create({
+    id: CONTEXT_MENU_ID,
+    title: title,
+    contexts: ['page']
+  })
+}
 
 function loadState () {
   chrome.storage.sync.get('state', (items) => {
